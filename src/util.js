@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import numeral from "numeral";
 import { Circle, Popup } from "react-leaflet";
 
@@ -25,11 +25,19 @@ export const sortData = (data, cof) => {
 export const prettyPrintStat = (stat) =>
   stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
-export const showDataOnMap = (data, casesType, myColor) =>
-  data.map((country) => (
+export const showDataOnMap = (data, casesType, myColor) =>{
+  const [col, setCol] = useState("");
+  useEffect(() => {
+    casesType=="recovered"?setCol("green"):setCol("red")
+  }, [casesType]);
+  console.log("col",col)
+  return data.map((country) => (
     <Circle
       center={[country.countryInfo.lat, country.countryInfo.long]}
-      fillColor={casesTypeColors[casesType].hex}
+      // color={casesTypeColors[casesType].hex}
+      color="red"
+      // fillColor={casesTypeColors[casesType].hex}
+      fillColor="yellow"
       fillOpacity={0.4}
       radius={
         Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier
@@ -65,3 +73,4 @@ export const showDataOnMap = (data, casesType, myColor) =>
       </Popup>
     </Circle>
   ));
+}

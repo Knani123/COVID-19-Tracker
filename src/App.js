@@ -100,7 +100,7 @@ export default function App() {
       .then((data) => {
         setCountry(countryCode);
         setCountryInfos(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        data.countryInfo&&setMapCenter([data.countryInfo.lat, data.countryInfo.long])
         setMapZoom(4);
       });
   };
